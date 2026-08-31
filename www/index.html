@@ -14,6 +14,7 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
@@ -22,6 +23,7 @@
             --shadow-dark: #b8bec9;
             --accent-blue: #0066ff;
             --text-color: #4a5568;
+            --danger-color: #ff3b30;
         }
 
         html, body {
@@ -30,15 +32,6 @@
             overflow: hidden;
             background-color: var(--bg-color);
             color: var(--text-color);
-        }
-
-        .app-container {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            padding: 16px;
-            gap: 14px;
         }
 
         .neu-flat {
@@ -53,40 +46,168 @@
             border-radius: 16px;
         }
 
-        .tabs-header {
-            display: flex;
-            gap: 12px;
-            padding: 8px;
-            flex-shrink: 0;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 10px 16px;
+        .neu-btn {
             border: none;
             outline: none;
             background: var(--bg-color);
             box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
             border-radius: 30px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             color: var(--text-color);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
+            padding: 8px 14px;
             transition: all 0.2s ease;
         }
 
-        .tab-btn.active {
+        .neu-btn:active {
             box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+        }
+
+        /* View Switching System */
+        .page-view {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            padding: 16px;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .page-view.active-page {
+            display: flex;
+        }
+
+        /* PAGE 1: App Grid Layout */
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px;
+            border-radius: 20px;
+            flex-shrink: 0;
+        }
+
+        .app-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .app-grid-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            grid-auto-rows: max-content;
+            gap: 20px 16px;
+            align-content: start;
+        }
+
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .item-icon-box {
+            width: 68px;
+            height: 68px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+            background: var(--bg-color);
+            transition: transform 0.2s ease;
+        }
+
+        .grid-item:active .item-icon-box {
+            transform: scale(0.92);
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+        }
+
+        .item-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--text-color);
+            word-break: break-word;
+            max-width: 80px;
+            line-height: 1.2;
+        }
+
+        .item-options {
+            position: absolute;
+            top: -4px;
+            right: 4px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--bg-color);
+            box-shadow: 2px 2px 5px var(--shadow-dark), -2px -2px 5px var(--shadow-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--text-color);
+        }
+
+        /* PAGE 2: Editor Section */
+        .nav-back-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 20px;
+            flex-shrink: 0;
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 10px;
+            padding: 6px;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            outline: none;
+            background: var(--bg-color);
+            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .tab-btn.active {
+            box-shadow: inset 3px 3px 5px var(--shadow-dark), inset -3px -3px 5px var(--shadow-light);
             color: var(--accent-blue);
         }
 
         .icon-square {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
         }
         .icon-html { background: linear-gradient(135deg, #ff5722, #ff9800); }
@@ -94,7 +215,7 @@
         .icon-js { background: linear-gradient(135deg, #ffc107, #ff9800); }
 
         .editor-container {
-            height: 200px;
+            height: 210px;
             padding: 10px;
             position: relative;
             overflow: hidden;
@@ -125,15 +246,11 @@
             border-right: 1px solid rgba(0,0,0,0.05) !important;
         }
 
-        .CodeMirror-linenumber {
-            color: #a0aec0 !important;
-        }
-
         .action-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 14px;
+            padding: 6px 12px;
             border-radius: 30px;
             flex-shrink: 0;
         }
@@ -141,20 +258,17 @@
         .live-status {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 13px;
+            gap: 6px;
+            font-size: 12px;
             font-weight: 800;
-            color: var(--text-color);
-            letter-spacing: 0.5px;
         }
 
         .status-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background-color: #00e676;
             border-radius: 50%;
             box-shadow: 0 0 8px #00e676;
-            transition: opacity 0.15s ease-in-out;
         }
 
         .status-dot.typing {
@@ -166,39 +280,9 @@
             100% { opacity: 1; transform: scale(1.2); }
         }
 
-        .buttons-group {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-action {
-            padding: 7px 12px;
-            border: none;
-            outline: none;
-            background: var(--bg-color);
-            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-color);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.2s ease;
-        }
-
-        .btn-action:active {
-            box-shadow: inset 3px 3px 5px var(--shadow-dark), inset -3px -3px 5px var(--shadow-light);
-        }
-
-        #file-input {
-            display: none;
-        }
-
         .preview-container {
             flex: 1;
-            padding: 8px;
+            padding: 6px;
             border-radius: 20px;
             overflow: hidden;
             background: #ffffff;
@@ -208,14 +292,101 @@
             width: 100%;
             height: 100%;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             background-color: #ffffff;
         }
+
+        /* Modal Dialog Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-card {
+            width: 85%;
+            max-width: 340px;
+            padding: 20px;
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            background: var(--bg-color);
+        }
+
+        .modal-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-color);
+        }
+
+        .neu-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: none;
+            outline: none;
+            background: var(--bg-color);
+            box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+            border-radius: 14px;
+            font-size: 13px;
+            color: var(--text-color);
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        #file-input { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
+    <!-- PAGE 1: DAFTAR FILE / APP MENU GRID -->
+    <div id="page-list" class="page-view active-page">
+        <div class="header-bar neu-flat">
+            <div class="app-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                JR Code
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <input type="file" id="file-input" accept="text/html, .html, .htm">
+                <button class="neu-btn" onclick="triggerFileInput()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    Import
+                </button>
+                <button class="neu-btn" onclick="openCreateModal()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Baru
+                </button>
+            </div>
+        </div>
+
+        <!-- App Icon Grid View -->
+        <div id="grid-container" class="app-grid-container neu-pressed"></div>
+    </div>
+
+    <!-- PAGE 2: EDITOR & LIVE PREVIEW -->
+    <div id="page-editor" class="page-view">
+        <div class="nav-back-bar neu-flat">
+            <button class="neu-btn" onclick="goBackToHome()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                Kembali
+            </button>
+            <span id="current-project-title" style="font-size: 14px; font-weight: 800; color: var(--text-color);">Project</span>
+            <button class="neu-btn" onclick="saveCurrentProject()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                Simpan
+            </button>
+        </div>
+
         <div class="tabs-header neu-flat">
             <button class="tab-btn active" onclick="switchTab('html')">
                 <span class="icon-square icon-html"></span> HTML
@@ -244,19 +415,11 @@
             <div class="live-status">
                 LIVE <span id="live-dot" class="status-dot"></span>
             </div>
-            <div class="buttons-group">
-                <input type="file" id="file-input" accept=".html,.htm" onchange="importHTMLFile(event)">
-                
-                <button class="btn-action" onclick="document.getElementById('file-input').click()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                    Import
+            <div style="display: flex; gap: 6px;">
+                <button class="neu-btn" style="padding: 6px 10px; font-size: 11px;" onclick="downloadSingleFile()">
+                    Export HTML
                 </button>
-                <button class="btn-action" onclick="downloadCode()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Download
-                </button>
-                <button class="btn-action" onclick="resetCode()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                <button class="neu-btn" style="padding: 6px 10px; font-size: 11px;" onclick="resetCode()">
                     Reset
                 </button>
             </div>
@@ -267,53 +430,71 @@
         </div>
     </div>
 
+    <!-- MODAL BUAT FILE BARU -->
+    <div id="modal-create" class="modal-overlay">
+        <div class="modal-card neu-flat">
+            <div class="modal-title">Buat Berkas Baru</div>
+            <div>
+                <label style="font-size: 11px; font-weight: 700; margin-bottom: 4px; display: block;">Nama File:</label>
+                <input type="text" id="new-file-name" class="neu-input" placeholder="Contoh: Aplikasi Saya">
+            </div>
+            <div class="modal-buttons">
+                <button class="neu-btn" onclick="closeCreateModal()">Batal</button>
+                <button class="neu-btn" style="color: var(--accent-blue);" onclick="confirmCreateProject()">Buat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CUSTOMIZE ICON / NAME -->
+    <div id="modal-edit" class="modal-overlay">
+        <div class="modal-card neu-flat">
+            <div class="modal-title">Edit Menu Icon</div>
+            <div>
+                <label style="font-size: 11px; font-weight: 700; margin-bottom: 4px; display: block;">Nama File:</label>
+                <input type="text" id="edit-name" class="neu-input">
+            </div>
+            <div>
+                <label style="font-size: 11px; font-weight: 700; margin-bottom: 4px; display: block;">Simbol Emoji Icon:</label>
+                <input type="text" id="edit-icon" class="neu-input" maxlength="2">
+            </div>
+            <div class="modal-buttons">
+                <button class="neu-btn" style="color: var(--danger-color);" onclick="deleteProjectFromModal()">Hapus</button>
+                <button class="neu-btn" onclick="closeModal()">Batal</button>
+                <button class="neu-btn" style="color: var(--accent-blue);" onclick="saveModalEdit()">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CodeMirror Dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/hint/show-hint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/hint/xml-hint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/hint/html-hint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/hint/css-hint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/edit/closetag.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/edit/closebrackets.min.js"></script>
 
     <script>
-        const editorHTML = CodeMirror.fromTextArea(document.getElementById('code-html'), {
-            mode: 'htmlmixed',
-            lineNumbers: true,
-            autoCloseTags: true,
-            autoCloseBrackets: true,
-            extraKeys: {"Ctrl-Space": "autocomplete"}
-        });
+        let projects = JSON.parse(localStorage.getItem('jrcode_projects')) || [
+            {
+                id: 'demo-1',
+                name: 'Welcome App',
+                icon: '🚀',
+                html: '<div class="card"><h1>JR Code App</h1><p>Selamat datang di JR Code Editor.</p><button onclick="alert(\'Halo!\')">Klik Saya</button></div>',
+                css: 'body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #e0e5ec; margin: 0; }\n.card { background: #e0e5ec; padding: 30px; border-radius: 20px; box-shadow: 8px 8px 16px #b8bec9, -8px -8px 16px #ffffff; text-align: center; }\nbutton { margin-top: 15px; padding: 10px 20px; border: none; border-radius: 12px; background: #0066ff; color: white; font-weight: bold; cursor: pointer; }',
+                js: 'console.log("Welcome to JR Code!");'
+            }
+        ];
 
-        const editorCSS = CodeMirror.fromTextArea(document.getElementById('code-css'), {
-            mode: 'css',
-            lineNumbers: true,
-            autoCloseBrackets: true,
-            extraKeys: {"Ctrl-Space": "autocomplete"}
-        });
+        let activeProjectId = null;
+        let activeEditId = null;
 
-        const editorJS = CodeMirror.fromTextArea(document.getElementById('code-js'), {
-            mode: 'javascript',
-            lineNumbers: true,
-            autoCloseBrackets: true,
-            extraKeys: {"Ctrl-Space": "autocomplete"}
-        });
+        const editorHTML = CodeMirror.fromTextArea(document.getElementById('code-html'), { mode: 'htmlmixed', lineNumbers: true });
+        const editorCSS = CodeMirror.fromTextArea(document.getElementById('code-css'), { mode: 'css', lineNumbers: true });
+        const editorJS = CodeMirror.fromTextArea(document.getElementById('code-js'), { mode: 'javascript', lineNumbers: true });
 
         let typingTimer;
         const liveDot = document.getElementById('live-dot');
 
         [editorHTML, editorCSS, editorJS].forEach(editor => {
-            editor.on('inputRead', function (cm, change) {
-                if (change.origin !== '+input') return;
-                const text = change.text[0];
-                if (/[a-zA-Z0-9<]/.test(text)) {
-                    CodeMirror.commands.autocomplete(cm, null, { completeSingle: false });
-                }
-            });
-
             editor.on('change', () => {
                 triggerBlink();
                 updatePreview();
@@ -323,36 +504,100 @@
         function triggerBlink() {
             liveDot.classList.add('typing');
             clearTimeout(typingTimer);
-            typingTimer = setTimeout(() => {
-                liveDot.classList.remove('typing');
-            }, 600);
+            typingTimer = setTimeout(() => liveDot.classList.remove('typing'), 600);
         }
 
-        function updatePreview() {
-            const html = editorHTML.getValue();
-            const css = editorCSS.getValue();
-            const js = editorJS.getValue();
+        function renderProjectGrid() {
+            const container = document.getElementById('grid-container');
+            container.innerHTML = '';
 
-            const fullContent = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <style>${css}</style>
-                </head>
-                <body>
-                    ${html}
-                    <script>${js}<\/script>
-                </body>
-                </html>
-            `;
-
-            const doc = document.getElementById('preview-window').contentWindow.document;
-            doc.open();
-            doc.write(fullContent);
-            doc.close();
+            projects.forEach(proj => {
+                const item = document.createElement('div');
+                item.className = 'grid-item';
+                item.innerHTML = `
+                    <div class="item-options" onclick="openEditModal(event, '${proj.id}')">⚙️</div>
+                    <div class="item-icon-box" onclick="openProject('${proj.id}')">${proj.icon || '📄'}</div>
+                    <div class="item-title" onclick="openProject('${proj.id}')">${proj.name}</div>
+                `;
+                container.appendChild(item);
+            });
+            
+            localStorage.setItem('jrcode_projects', JSON.stringify(projects));
         }
 
-        function importHTMLFile(event) {
+        function openProject(id) {
+            const proj = projects.find(p => p.id === id);
+            if (!proj) return;
+
+            activeProjectId = id;
+            document.getElementById('current-project-title').textContent = proj.name;
+
+            editorHTML.setValue(proj.html || '');
+            editorCSS.setValue(proj.css || '');
+            editorJS.setValue(proj.js || '');
+
+            document.getElementById('page-list').classList.remove('active-page');
+            document.getElementById('page-editor').classList.add('active-page');
+
+            switchTab('html');
+            updatePreview();
+        }
+
+        function goBackToHome() {
+            saveCurrentProject();
+            document.getElementById('page-editor').classList.remove('active-page');
+            document.getElementById('page-list').classList.add('active-page');
+            renderProjectGrid();
+        }
+
+        function saveCurrentProject() {
+            if (!activeProjectId) return;
+            const proj = projects.find(p => p.id === activeProjectId);
+            if (proj) {
+                proj.html = editorHTML.getValue();
+                proj.css = editorCSS.getValue();
+                proj.js = editorJS.getValue();
+                localStorage.setItem('jrcode_projects', JSON.stringify(projects));
+            }
+        }
+
+        /* Handler Modal Buat Baru (Pengganti Prompt Browser) */
+        function openCreateModal() {
+            document.getElementById('new-file-name').value = '';
+            document.getElementById('modal-create').style.display = 'flex';
+        }
+
+        function closeCreateModal() {
+            document.getElementById('modal-create').style.display = 'none';
+        }
+
+        function confirmCreateProject() {
+            const nameInput = document.getElementById('new-file-name').value.trim();
+            const newName = nameInput !== '' ? nameInput : 'Proyek Baru';
+
+            const newProj = {
+                id: 'proj_' + Date.now(),
+                name: newName,
+                icon: '🌐',
+                html: '<h1>' + newName + '</h1>\n<p>Mulai ketik kode di sini...</p>',
+                css: 'body { padding: 20px; font-family: sans-serif; }',
+                js: ''
+            };
+
+            projects.push(newProj);
+            closeCreateModal();
+            renderProjectGrid();
+            openProject(newProj.id);
+        }
+
+        /* Handler Import File */
+        function triggerFileInput() {
+            const fileInput = document.getElementById('file-input');
+            fileInput.value = '';
+            fileInput.click();
+        }
+
+        document.getElementById('file-input').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (!file) return;
 
@@ -363,31 +608,81 @@
                 const doc = parser.parseFromString(content, 'text/html');
 
                 let extractedCSS = '';
-                const styleTags = doc.querySelectorAll('style');
-                styleTags.forEach(style => {
-                    extractedCSS += style.textContent + '\n';
-                    style.remove();
+                doc.querySelectorAll('style').forEach(s => {
+                    extractedCSS += s.textContent + '\n';
+                    s.remove();
                 });
 
                 let extractedJS = '';
-                const scriptTags = doc.querySelectorAll('script');
-                scriptTags.forEach(script => {
-                    if (!script.src) {
-                        extractedJS += script.textContent + '\n';
-                        script.remove();
+                doc.querySelectorAll('script').forEach(s => {
+                    if (!s.src) {
+                        extractedJS += s.textContent + '\n';
+                        s.remove();
                     }
                 });
 
-                editorHTML.setValue(doc.body.innerHTML.trim() || content);
-                if (extractedCSS.trim()) editorCSS.setValue(extractedCSS.trim());
-                if (extractedJS.trim()) editorJS.setValue(extractedJS.trim());
+                const importedProj = {
+                    id: 'proj_' + Date.now(),
+                    name: file.name.replace(/\.[^/.]+$/, ""),
+                    icon: '📁',
+                    html: doc.body.innerHTML.trim() || content,
+                    css: extractedCSS.trim(),
+                    js: extractedJS.trim()
+                };
 
-                updatePreview();
-                switchTab('html');
-                event.target.value = '';
+                projects.push(importedProj);
+                renderProjectGrid();
+                openProject(importedProj.id);
             };
-
             reader.readAsText(file);
+        });
+
+        /* Edit Modal Handlers */
+        function openEditModal(event, id) {
+            event.stopPropagation();
+            activeEditId = id;
+            const proj = projects.find(p => p.id === id);
+            if (!proj) return;
+
+            document.getElementById('edit-name').value = proj.name;
+            document.getElementById('edit-icon').value = proj.icon || '📄';
+            document.getElementById('modal-edit').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal-edit').style.display = 'none';
+        }
+
+        function saveModalEdit() {
+            const proj = projects.find(p => p.id === activeEditId);
+            if (proj) {
+                proj.name = document.getElementById('edit-name').value || 'Tanpa Nama';
+                proj.icon = document.getElementById('edit-icon').value || '📄';
+                renderProjectGrid();
+            }
+            closeModal();
+        }
+
+        function deleteProjectFromModal() {
+            if (confirm('Yakin ingin menghapus file ini?')) {
+                projects = projects.filter(p => p.id !== activeEditId);
+                renderProjectGrid();
+                closeModal();
+            }
+        }
+
+        /* Editor Utilities */
+        function updatePreview() {
+            const html = editorHTML.getValue();
+            const css = editorCSS.getValue();
+            const js = editorJS.getValue();
+
+            const fullContent = `<!DOCTYPE html><html><head><style>${css}</style></head><body>${html}<script>${js}<\/script></body></html>`;
+
+            const doc = document.getElementById('preview-window').contentWindow.document;
+            doc.open();
+            doc.write(fullContent);
+            doc.close();
         }
 
         function switchTab(tab) {
@@ -419,21 +714,20 @@
             updatePreview();
         }
 
-        function downloadCode() {
+        function downloadSingleFile() {
             const html = editorHTML.getValue();
             const css = editorCSS.getValue();
             const js = editorJS.getValue();
-
             const fileContent = `<!DOCTYPE html>\n<html>\n<head>\n<style>\n${css}\n</style>\n</head>\n<body>\n${html}\n<script>\n${js}\n<\/script>\n</body>\n</html>`;
             
             const blob = new Blob([fileContent], { type: 'text/html' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = 'index.html';
+            a.download = (document.getElementById('current-project-title').textContent || 'index') + '.html';
             a.click();
         }
 
-        updatePreview();
+        renderProjectGrid();
     </script>
 </body>
 </html>
