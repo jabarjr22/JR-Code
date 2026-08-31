@@ -35,12 +35,15 @@ jobs:
             cp -r temp_app/* .
             rm -rf temp_app
           fi
-          cordova platform add android --nosave || true
 
-      - name: Install Cordova Plugins (File Picker & Permissions)
+      - name: Clean Old Platforms & Install Plugins
         run: |
+          rm -rf platforms/android
           cordova plugin add cordova-plugin-file --nosave || true
           cordova plugin add cordova-plugin-android-permissions --nosave || true
+
+      - name: Add Android Platform
+        run: cordova platform add android@latest
 
       - name: Build Android APK
         run: cordova build android --release -- --no-daemon
