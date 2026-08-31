@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.jrcode.app" version="1.0.0" xmlns="http://www.cordova.io/ns/1.0" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>JR Code</name>
+    <description>JR Code HTML Editor Application</description>
+    <author email="dev@jrcode.com">JR Code</author>
+    <content src="index.html" />
+    <access origin="*" />
+    
+    <preference name="ScrollEnabled" value="false" />
+    <preference name="BackupWebStorage" value="none" />
+    <preference name="Orientation" value="portrait" />
+
+    <!-- Pengaturan Ikon -->
+    <icon src="res/icon.png" />
+
+    <platform name="android">
+        <allow-intent href="market:*" />
+        <icon src="res/icon.png" />
+    </platform>
+</widget>
