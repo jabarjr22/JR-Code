@@ -1,4 +1,4 @@
-name: Build Android APK (JR Code)
+name: Build Android APK
 
 on:
   push:
@@ -9,42 +9,44 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
       - name: Setup Java JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Install Cordova & Build App
+      - name: Install Cordova
+        run: npm install -g cordova
+
+      - name: Prepare Cordova Project
         run: |
-          npm install -g cordova
-          cordova create jr-code com.jrcode.app "JR Code"
-          cd jr-code
-          
-          # Salin file web utama ke www
-          cp -r ../www/* www/
-          
-          # Tambahkan platform Android
-          cordova platform add android
-          
-          # Build APK
-          cordova build android --no-telemetry
+          if [ ! -f "config.xml" ]; then
+            cordova create temp_app com.jrcode.app JRCode
+            cp -r temp_app/* .
+            rm -rf temp_app
+          fi
+          cordova platform add android --nosave || true
+
+      - name: Install Cordova Plugins (File Picker & Permissions)
+        run: |
+          cordova plugin add cordova-plugin-file --nosave || true
+          cordova plugin add cordova-plugin-android-permissions --nosave || true
+
+      - name: Build Android APK
+        run: cordova build android --release -- --no-daemon
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: JR-Code-APK
-          path: jr-code/platforms/android/app/build/outputs/apk/debug/app-debug.apk
-
-          cordova plugin add cordova-plugin-file
-cordova plugin add cordova-plugin-android-permissions
-
+          name: JRCode-Release-APK
+          path: platforms/android/app/build/outputs/apk/release/*.apk
