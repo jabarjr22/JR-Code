@@ -1,0 +1,46 @@
+name: Build Android APK (JR Code)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Install Cordova & Build App
+        run: |
+          npm install -g cordova
+          cordova create jr-code com.jrcode.app "JR Code"
+          cd jr-code
+          
+          # Salin file web utama ke www
+          cp -r ../www/* www/
+          
+          # Tambahkan platform Android
+          cordova platform add android
+          
+          # Build APK
+          cordova build android --no-telemetry
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: JR-Code-APK
+          path: jr-code/platforms/android/app/build/outputs/apk/debug/app-debug.apk
