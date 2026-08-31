@@ -28,13 +28,23 @@ jobs:
       - name: Install Cordova
         run: npm install -g cordova
 
-      - name: Prepare Cordova Project
+      - name: Prepare Cordova Project & Preserve Web Source
         run: |
+          # Backup folder www milik Anda
+          mkdir -p my_src
+          cp -r www/* my_src/ 2>/dev/null || true
+          
+          # Buat struktur proyek Cordova jika belum ada config.xml
           if [ ! -f "config.xml" ]; then
             cordova create temp_app com.jrcode.app JRCode
             cp -r temp_app/* .
             rm -rf temp_app
           fi
+
+          # Kembalikan file www asli Anda agar tidak tertimpa template Cordova
+          mkdir -p www
+          cp -r my_src/* www/
+          rm -rf my_src
 
       - name: Clean Old Platforms & Install Plugins
         run: |
@@ -47,11 +57,6 @@ jobs:
 
       - name: Build Android APK
         run: cordova build android --debug -- --no-daemon
-
-      - name: Check Generated APK File
-        run: |
-          echo "=== Pengecekan Lokasi APK ==="
-          find platforms/android/ -name "*.apk"
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
