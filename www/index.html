@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>JR Code</title>
     <!-- CodeMirror Editor Dependencies -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
@@ -15,6 +15,7 @@
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
 
         :root {
@@ -101,14 +102,19 @@
             gap: 8px;
         }
 
+        .logo-svg {
+            width: 28px;
+            height: 28px;
+        }
+
         .app-grid-container {
             flex: 1;
             overflow-y: auto;
-            padding: 12px;
+            padding: 16px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
             grid-auto-rows: max-content;
-            gap: 20px 16px;
+            gap: 24px 16px;
             align-content: start;
         }
 
@@ -122,13 +128,12 @@
         }
 
         .item-icon-box {
-            width: 68px;
-            height: 68px;
-            border-radius: 18px;
+            width: 72px;
+            height: 72px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
             box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
             background: var(--bg-color);
             transition: transform 0.2s ease;
@@ -140,32 +145,42 @@
         }
 
         .item-title {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
             text-align: center;
             color: var(--text-color);
             word-break: break-word;
-            max-width: 80px;
+            max-width: 85px;
             line-height: 1.2;
         }
 
-        .item-options {
-            position: absolute;
-            top: -4px;
-            right: 4px;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: var(--bg-color);
-            box-shadow: 2px 2px 5px var(--shadow-dark), -2px -2px 5px var(--shadow-light);
+        /* PAGE 2: FULL PREVIEW */
+        .preview-bar {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: var(--text-color);
+            padding: 8px 12px;
+            border-radius: 20px;
+            flex-shrink: 0;
         }
 
-        /* PAGE 2: Editor Section */
+        .full-preview-container {
+            flex: 1;
+            padding: 4px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 16px;
+            background-color: #ffffff;
+        }
+
+        /* PAGE 3: CODE EDITOR */
         .nav-back-bar {
             display: flex;
             justify-content: space-between;
@@ -215,12 +230,11 @@
         .icon-js { background: linear-gradient(135deg, #ffc107, #ff9800); }
 
         .editor-container {
-            height: 210px;
+            flex: 1;
             padding: 10px;
             position: relative;
             overflow: hidden;
             border-radius: 16px;
-            flex-shrink: 0;
         }
 
         .editor-wrapper {
@@ -246,56 +260,6 @@
             border-right: 1px solid rgba(0,0,0,0.05) !important;
         }
 
-        .action-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 12px;
-            border-radius: 30px;
-            flex-shrink: 0;
-        }
-
-        .live-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            font-weight: 800;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #00e676;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #00e676;
-        }
-
-        .status-dot.typing {
-            animation: pulse-blink 0.3s infinite alternate;
-        }
-
-        @keyframes pulse-blink {
-            0% { opacity: 0.2; transform: scale(0.85); }
-            100% { opacity: 1; transform: scale(1.2); }
-        }
-
-        .preview-container {
-            flex: 1;
-            padding: 6px;
-            border-radius: 20px;
-            overflow: hidden;
-            background: #ffffff;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 14px;
-            background-color: #ffffff;
-        }
-
         /* Modal Dialog Styling */
         .modal-overlay {
             position: fixed;
@@ -310,19 +274,21 @@
 
         .modal-card {
             width: 85%;
-            max-width: 340px;
+            max-width: 320px;
             padding: 20px;
             border-radius: 24px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
             background: var(--bg-color);
         }
 
         .modal-title {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 800;
             color: var(--text-color);
+            text-align: center;
+            margin-bottom: 4px;
         }
 
         .neu-input {
@@ -335,13 +301,35 @@
             border-radius: 14px;
             font-size: 13px;
             color: var(--text-color);
+            user-select: text;
         }
 
         .modal-buttons {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
-            margin-top: 4px;
+            margin-top: 6px;
+        }
+
+        .context-menu-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: var(--bg-color);
+            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-color);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .context-menu-btn:active {
+            box-shadow: inset 3px 3px 5px var(--shadow-dark), inset -3px -3px 5px var(--shadow-light);
         }
 
         #file-input { display: none; }
@@ -349,12 +337,21 @@
 </head>
 <body>
 
-    <!-- PAGE 1: DAFTAR FILE / APP MENU GRID -->
+    <!-- SVG LOGO TEMPLATE -->
+    <svg style="display:none;">
+        <symbol id="jr-logo" viewBox="0 0 100 100">
+            <path d="M 32 25 L 12 50 L 32 75" fill="none" stroke="#0055ff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 58 20 L 42 80" fill="none" stroke="#00d2ff" stroke-width="11" stroke-linecap="round"/>
+            <path d="M 68 25 L 88 50 L 68 75" fill="none" stroke="#ff4500" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+    </svg>
+
+    <!-- PAGE 1: BERANDA / APP GRID -->
     <div id="page-list" class="page-view active-page">
         <div class="header-bar neu-flat">
             <div class="app-title">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                JR Code
+                <svg class="logo-svg"><use href="#jr-logo"/></svg>
+                JR CODE
             </div>
             <div style="display: flex; gap: 8px;">
                 <input type="file" id="file-input" accept="text/html, .html, .htm">
@@ -369,18 +366,35 @@
             </div>
         </div>
 
-        <!-- App Icon Grid View -->
         <div id="grid-container" class="app-grid-container neu-pressed"></div>
     </div>
 
-    <!-- PAGE 2: EDITOR & LIVE PREVIEW -->
-    <div id="page-editor" class="page-view">
-        <div class="nav-back-bar neu-flat">
-            <button class="neu-btn" onclick="goBackToHome()">
+    <!-- PAGE 2: FULL PREVIEW (Direct Open) -->
+    <div id="page-preview" class="page-view">
+        <div class="preview-bar neu-flat">
+            <button class="neu-btn" onclick="goHomeFromPreview()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
                 Kembali
             </button>
-            <span id="current-project-title" style="font-size: 14px; font-weight: 800; color: var(--text-color);">Project</span>
+            <span id="preview-project-title" style="font-size: 14px; font-weight: 800; color: var(--text-color);">Project</span>
+            <button class="neu-btn" style="color: var(--accent-blue);" onclick="switchToEditor()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Edit
+            </button>
+        </div>
+        <div class="full-preview-container neu-pressed">
+            <iframe id="full-preview-window"></iframe>
+        </div>
+    </div>
+
+    <!-- PAGE 3: CODE EDITOR -->
+    <div id="page-editor" class="page-view">
+        <div class="nav-back-bar neu-flat">
+            <button class="neu-btn" onclick="goBackToPreview()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                Selesai
+            </button>
+            <span id="editor-project-title" style="font-size: 14px; font-weight: 800; color: var(--text-color);">Project</span>
             <button class="neu-btn" onclick="saveCurrentProject()">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                 Simpan
@@ -410,34 +424,35 @@
                 <textarea id="code-js"></textarea>
             </div>
         </div>
+    </div>
 
-        <div class="action-bar neu-flat">
-            <div class="live-status">
-                LIVE <span id="live-dot" class="status-dot"></span>
+    <!-- MODAL POPUP CONTEXT MENU (Tekan Lama) -->
+    <div id="modal-context" class="modal-overlay">
+        <div class="modal-card neu-flat">
+            <div id="context-title" class="modal-title">Nama File</div>
+            <button class="context-menu-btn" onclick="actionFromContext('open')">
+                👁️ Buka Preview
+            </button>
+            <button class="context-menu-btn" onclick="actionFromContext('edit')">
+                ✏️ Edit Kode
+            </button>
+            <button class="context-menu-btn" onclick="actionFromContext('rename')">
+                🏷️ Rename (Ubah Nama)
+            </button>
+            <button class="context-menu-btn" style="color: var(--danger-color);" onclick="actionFromContext('delete')">
+                🗑️ Hapus
+            </button>
+            <div class="modal-buttons">
+                <button class="neu-btn" onclick="closeContextModal()">Batal</button>
             </div>
-            <div style="display: flex; gap: 6px;">
-                <button class="neu-btn" style="padding: 6px 10px; font-size: 11px;" onclick="downloadSingleFile()">
-                    Export HTML
-                </button>
-                <button class="neu-btn" style="padding: 6px 10px; font-size: 11px;" onclick="resetCode()">
-                    Reset
-                </button>
-            </div>
-        </div>
-
-        <div class="preview-container neu-pressed">
-            <iframe id="preview-window"></iframe>
         </div>
     </div>
 
-    <!-- MODAL BUAT FILE BARU -->
+    <!-- MODAL BUAT BARU -->
     <div id="modal-create" class="modal-overlay">
         <div class="modal-card neu-flat">
-            <div class="modal-title">Buat Berkas Baru</div>
-            <div>
-                <label style="font-size: 11px; font-weight: 700; margin-bottom: 4px; display: block;">Nama File:</label>
-                <input type="text" id="new-file-name" class="neu-input" placeholder="Contoh: Aplikasi Saya">
-            </div>
+            <div class="modal-title">Buat File Baru</div>
+            <input type="text" id="new-file-name" class="neu-input" placeholder="Nama berkas...">
             <div class="modal-buttons">
                 <button class="neu-btn" onclick="closeCreateModal()">Batal</button>
                 <button class="neu-btn" style="color: var(--accent-blue);" onclick="confirmCreateProject()">Buat</button>
@@ -445,22 +460,14 @@
         </div>
     </div>
 
-    <!-- MODAL CUSTOMIZE ICON / NAME -->
-    <div id="modal-edit" class="modal-overlay">
+    <!-- MODAL RENAME FILE -->
+    <div id="modal-rename" class="modal-overlay">
         <div class="modal-card neu-flat">
-            <div class="modal-title">Edit Menu Icon</div>
-            <div>
-                <label style="font-size: 11px; font-weight: 700; margin-bottom: 4px; display: block;">Nama File:</label>
-                <input type="text" id="edit-name" class="neu-input">
-            </div>
-            <div>
-                <label style="font-size: 11px; font-weight: 700; margin-bottom: 4px; display: block;">Simbol Emoji Icon:</label>
-                <input type="text" id="edit-icon" class="neu-input" maxlength="2">
-            </div>
+            <div class="modal-title">Ubah Nama File</div>
+            <input type="text" id="rename-input" class="neu-input">
             <div class="modal-buttons">
-                <button class="neu-btn" style="color: var(--danger-color);" onclick="deleteProjectFromModal()">Hapus</button>
-                <button class="neu-btn" onclick="closeModal()">Batal</button>
-                <button class="neu-btn" style="color: var(--accent-blue);" onclick="saveModalEdit()">Simpan</button>
+                <button class="neu-btn" onclick="closeRenameModal()">Batal</button>
+                <button class="neu-btn" style="color: var(--accent-blue);" onclick="confirmRenameProject()">Simpan</button>
             </div>
         </div>
     </div>
@@ -477,35 +484,20 @@
             {
                 id: 'demo-1',
                 name: 'Welcome App',
-                icon: '🚀',
-                html: '<div class="card"><h1>JR Code App</h1><p>Selamat datang di JR Code Editor.</p><button onclick="alert(\'Halo!\')">Klik Saya</button></div>',
+                html: '<div class="card"><h1>JR CODE</h1><p>Selamat datang di JR Code Editor.</p><button onclick="alert(\'Aplikasi Berjalan!\')">Tes Klik</button></div>',
                 css: 'body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #e0e5ec; margin: 0; }\n.card { background: #e0e5ec; padding: 30px; border-radius: 20px; box-shadow: 8px 8px 16px #b8bec9, -8px -8px 16px #ffffff; text-align: center; }\nbutton { margin-top: 15px; padding: 10px 20px; border: none; border-radius: 12px; background: #0066ff; color: white; font-weight: bold; cursor: pointer; }',
-                js: 'console.log("Welcome to JR Code!");'
+                js: 'console.log("JR Code Active!");'
             }
         ];
 
         let activeProjectId = null;
-        let activeEditId = null;
+        let selectedContextId = null;
+        let holdTimer = null;
+        let isLongPress = false;
 
         const editorHTML = CodeMirror.fromTextArea(document.getElementById('code-html'), { mode: 'htmlmixed', lineNumbers: true });
         const editorCSS = CodeMirror.fromTextArea(document.getElementById('code-css'), { mode: 'css', lineNumbers: true });
         const editorJS = CodeMirror.fromTextArea(document.getElementById('code-js'), { mode: 'javascript', lineNumbers: true });
-
-        let typingTimer;
-        const liveDot = document.getElementById('live-dot');
-
-        [editorHTML, editorCSS, editorJS].forEach(editor => {
-            editor.on('change', () => {
-                triggerBlink();
-                updatePreview();
-            });
-        });
-
-        function triggerBlink() {
-            liveDot.classList.add('typing');
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(() => liveDot.classList.remove('typing'), 600);
-        }
 
         function renderProjectGrid() {
             const container = document.getElementById('grid-container');
@@ -514,40 +506,81 @@
             projects.forEach(proj => {
                 const item = document.createElement('div');
                 item.className = 'grid-item';
+                
                 item.innerHTML = `
-                    <div class="item-options" onclick="openEditModal(event, '${proj.id}')">⚙️</div>
-                    <div class="item-icon-box" onclick="openProject('${proj.id}')">${proj.icon || '📄'}</div>
-                    <div class="item-title" onclick="openProject('${proj.id}')">${proj.name}</div>
+                    <div class="item-icon-box">
+                        <svg class="logo-svg" style="width: 36px; height: 36px;"><use href="#jr-logo"/></svg>
+                    </div>
+                    <div class="item-title">${proj.name}</div>
                 `;
+
+                // Handle Long Press & Short Press
+                item.addEventListener('touchstart', (e) => startPress(e, proj.id), {passive: true});
+                item.addEventListener('touchend', (e) => endPress(e, proj.id));
+                item.addEventListener('mousedown', (e) => startPress(e, proj.id));
+                item.addEventListener('mouseup', (e) => endPress(e, proj.id));
+
                 container.appendChild(item);
             });
-            
+
             localStorage.setItem('jrcode_projects', JSON.stringify(projects));
         }
 
-        function openProject(id) {
+        function startPress(e, id) {
+            isLongPress = false;
+            holdTimer = setTimeout(() => {
+                isLongPress = true;
+                openContextMenu(id);
+            }, 500); // 500ms untuk Tekan Lama
+        }
+
+        function endPress(e, id) {
+            clearTimeout(holdTimer);
+            if (!isLongPress && e.type !== 'mouseleave') {
+                openFullPreview(id); // Tekan sebentar -> Langsung Buka Full Preview
+            }
+        }
+
+        function openFullPreview(id) {
             const proj = projects.find(p => p.id === id);
             if (!proj) return;
 
             activeProjectId = id;
-            document.getElementById('current-project-title').textContent = proj.name;
+            document.getElementById('preview-project-title').textContent = proj.name;
 
+            const fullContent = `<!DOCTYPE html><html><head><style>${proj.css || ''}</style></head><body>${proj.html || ''}<script>${proj.js || ''}<\/script></body></html>`;
+            const doc = document.getElementById('full-preview-window').contentWindow.document;
+            doc.open();
+            doc.write(fullContent);
+            doc.close();
+
+            document.getElementById('page-list').classList.remove('active-page');
+            document.getElementById('page-preview').classList.add('active-page');
+        }
+
+        function switchToEditor() {
+            const proj = projects.find(p => p.id === activeProjectId);
+            if (!proj) return;
+
+            document.getElementById('editor-project-title').textContent = proj.name;
             editorHTML.setValue(proj.html || '');
             editorCSS.setValue(proj.css || '');
             editorJS.setValue(proj.js || '');
 
-            document.getElementById('page-list').classList.remove('active-page');
+            document.getElementById('page-preview').classList.remove('active-page');
             document.getElementById('page-editor').classList.add('active-page');
-
             switchTab('html');
-            updatePreview();
         }
 
-        function goBackToHome() {
+        function goHomeFromPreview() {
+            document.getElementById('page-preview').classList.remove('active-page');
+            document.getElementById('page-list').classList.add('active-page');
+        }
+
+        function goBackToPreview() {
             saveCurrentProject();
             document.getElementById('page-editor').classList.remove('active-page');
-            document.getElementById('page-list').classList.add('active-page');
-            renderProjectGrid();
+            openFullPreview(activeProjectId);
         }
 
         function saveCurrentProject() {
@@ -561,7 +594,60 @@
             }
         }
 
-        /* Handler Modal Buat Baru (Pengganti Prompt Browser) */
+        /* Pop-up Menu Context Handlers */
+        function openContextMenu(id) {
+            selectedContextId = id;
+            const proj = projects.find(p => p.id === id);
+            if (!proj) return;
+
+            document.getElementById('context-title').textContent = proj.name;
+            document.getElementById('modal-context').style.display = 'flex';
+        }
+
+        function closeContextModal() {
+            document.getElementById('modal-context').style.display = 'none';
+        }
+
+        function actionFromContext(type) {
+            closeContextModal();
+            if (type === 'open') {
+                openFullPreview(selectedContextId);
+            } else if (type === 'edit') {
+                activeProjectId = selectedContextId;
+                switchToEditor();
+            } else if (type === 'rename') {
+                openRenameModal();
+            } else if (type === 'delete') {
+                if (confirm('Hapus berkas ini?')) {
+                    projects = projects.filter(p => p.id !== selectedContextId);
+                    renderProjectGrid();
+                }
+            }
+        }
+
+        /* Rename Modal */
+        function openRenameModal() {
+            const proj = projects.find(p => p.id === selectedContextId);
+            if (!proj) return;
+            document.getElementById('rename-input').value = proj.name;
+            document.getElementById('modal-rename').style.display = 'flex';
+        }
+
+        function closeRenameModal() {
+            document.getElementById('modal-rename').style.display = 'none';
+        }
+
+        function confirmRenameProject() {
+            const newName = document.getElementById('rename-input').value.trim();
+            const proj = projects.find(p => p.id === selectedContextId);
+            if (proj && newName !== '') {
+                proj.name = newName;
+                renderProjectGrid();
+            }
+            closeRenameModal();
+        }
+
+        /* Create Modal */
         function openCreateModal() {
             document.getElementById('new-file-name').value = '';
             document.getElementById('modal-create').style.display = 'flex';
@@ -578,7 +664,6 @@
             const newProj = {
                 id: 'proj_' + Date.now(),
                 name: newName,
-                icon: '🌐',
                 html: '<h1>' + newName + '</h1>\n<p>Mulai ketik kode di sini...</p>',
                 css: 'body { padding: 20px; font-family: sans-serif; }',
                 js: ''
@@ -587,10 +672,10 @@
             projects.push(newProj);
             closeCreateModal();
             renderProjectGrid();
-            openProject(newProj.id);
+            openFullPreview(newProj.id);
         }
 
-        /* Handler Import File */
+        /* File Import Handler */
         function triggerFileInput() {
             const fileInput = document.getElementById('file-input');
             fileInput.value = '';
@@ -624,7 +709,6 @@
                 const importedProj = {
                     id: 'proj_' + Date.now(),
                     name: file.name.replace(/\.[^/.]+$/, ""),
-                    icon: '📁',
                     html: doc.body.innerHTML.trim() || content,
                     css: extractedCSS.trim(),
                     js: extractedJS.trim()
@@ -632,59 +716,12 @@
 
                 projects.push(importedProj);
                 renderProjectGrid();
-                openProject(importedProj.id);
+                openFullPreview(importedProj.id);
             };
             reader.readAsText(file);
         });
 
-        /* Edit Modal Handlers */
-        function openEditModal(event, id) {
-            event.stopPropagation();
-            activeEditId = id;
-            const proj = projects.find(p => p.id === id);
-            if (!proj) return;
-
-            document.getElementById('edit-name').value = proj.name;
-            document.getElementById('edit-icon').value = proj.icon || '📄';
-            document.getElementById('modal-edit').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('modal-edit').style.display = 'none';
-        }
-
-        function saveModalEdit() {
-            const proj = projects.find(p => p.id === activeEditId);
-            if (proj) {
-                proj.name = document.getElementById('edit-name').value || 'Tanpa Nama';
-                proj.icon = document.getElementById('edit-icon').value || '📄';
-                renderProjectGrid();
-            }
-            closeModal();
-        }
-
-        function deleteProjectFromModal() {
-            if (confirm('Yakin ingin menghapus file ini?')) {
-                projects = projects.filter(p => p.id !== activeEditId);
-                renderProjectGrid();
-                closeModal();
-            }
-        }
-
-        /* Editor Utilities */
-        function updatePreview() {
-            const html = editorHTML.getValue();
-            const css = editorCSS.getValue();
-            const js = editorJS.getValue();
-
-            const fullContent = `<!DOCTYPE html><html><head><style>${css}</style></head><body>${html}<script>${js}<\/script></body></html>`;
-
-            const doc = document.getElementById('preview-window').contentWindow.document;
-            doc.open();
-            doc.write(fullContent);
-            doc.close();
-        }
-
+        /* Tab Switcher */
         function switchTab(tab) {
             const tabs = document.querySelectorAll('.tab-btn');
             const wrappers = document.querySelectorAll('.editor-wrapper');
@@ -705,26 +742,6 @@
                 document.getElementById('wrapper-js').classList.add('active');
                 editorJS.refresh();
             }
-        }
-
-        function resetCode() {
-            editorHTML.setValue('');
-            editorCSS.setValue('');
-            editorJS.setValue('');
-            updatePreview();
-        }
-
-        function downloadSingleFile() {
-            const html = editorHTML.getValue();
-            const css = editorCSS.getValue();
-            const js = editorJS.getValue();
-            const fileContent = `<!DOCTYPE html>\n<html>\n<head>\n<style>\n${css}\n</style>\n</head>\n<body>\n${html}\n<script>\n${js}\n<\/script>\n</body>\n</html>`;
-            
-            const blob = new Blob([fileContent], { type: 'text/html' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = (document.getElementById('current-project-title').textContent || 'index') + '.html';
-            a.click();
         }
 
         renderProjectGrid();
